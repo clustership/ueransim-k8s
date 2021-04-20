@@ -36,7 +36,7 @@ spec:
           args:
           - /bin/sh
           - -c
-          - sleep infinity
+          - ./nr-gnb -c /open5gs/config/open5gs-gnb.yaml
           volumeMounts:
           - name: open5gs-gnb-config
             mountPath: /open5gs/config/open5gs-gnb.yaml
