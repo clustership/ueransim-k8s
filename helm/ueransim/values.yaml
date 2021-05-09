@@ -16,14 +16,14 @@ fullnameOverride: ""
 
 nrGnb:
   name: nr-gnb
-  address: 10.2.133.44
+  address: 0.0.0.0
 
 nrUe:
   name: nr-ue
 
 amf:
-  address: 192.168.50.126
-  port: "30412"
+  address: 172.30.10.111
+  port: "38412"
 
 serviceAccount:
   # Specifies whether a service account should be created

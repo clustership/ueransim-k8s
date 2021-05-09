@@ -30,13 +30,13 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            privileged: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           - /bin/sh
           - -c
-          - ./nr-gnb -c /open5gs/config/open5gs-gnb.yaml
+          - sleep infinity
           volumeMounts:
           - name: open5gs-gnb-config
             mountPath: /open5gs/config/open5gs-gnb.yaml
