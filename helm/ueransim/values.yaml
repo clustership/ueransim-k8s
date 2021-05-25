@@ -22,7 +22,7 @@ nrUe:
   name: nr-ue
 
 amf:
-  address: 172.30.10.111
+  address: 172.30.48.253
   port: "38412"
 
 serviceAccount:

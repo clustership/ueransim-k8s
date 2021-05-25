@@ -18,7 +18,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        service: {{ .Values.nrGnb.name }}
         {{- include "ueransim.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/service: {{ include "ueransim.fullname" . }}-{{ .Values.nrGnb.name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -28,15 +30,19 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            privileged: true
+        - name: {{ include "ueransim.fullname" . }}-{{ .Values.nrGnb.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           - /bin/sh
           - -c
-          - sleep infinity
+          - 'echo GNB IP: ${GNB_IP}; cat /open5gs/config/open5gs-gnb.yaml | sed -e "s/0\.0\.0\.0/$GNB_IP/g" > /tmp/open5gs-gnb.yaml ; ./nr-gnb -c /tmp/open5gs-gnb.yaml'
+          env:
+          - name: GNB_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
           volumeMounts:
           - name: open5gs-gnb-config
             mountPath: /open5gs/config/open5gs-gnb.yaml

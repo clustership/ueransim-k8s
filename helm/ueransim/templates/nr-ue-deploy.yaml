@@ -19,6 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "ueransim.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/service: {{ include "ueransim.fullname" . }}-{{ .Values.nrUe.name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -28,7 +29,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "ueransim.fullname" . }}-{{ .Values.nrUe.name }}
           securityContext:
             privileged: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -36,7 +37,7 @@ spec:
           args:
           - /bin/sh
           - -c
-          - sleep infinity
+          - ./nr-ue -c /open5gs/config/open5gs-ue.yaml
           volumeMounts:
           - name: open5gs-ue-config
             mountPath: /open5gs/config/open5gs-ue.yaml

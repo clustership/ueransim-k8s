@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.nrGnb.name }}
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  ports:
+  - name: gpt
+    port: 2152
+    protocol: UDP
+    targetPort: 4997
+  - name: udp-4997
+    port: 4997
+    protocol: UDP
+    targetPort: 4997
+  selector:
+    service: {{ .Values.nrGnb.name }}
+  sessionAffinity: None
+  type: ClusterIP
