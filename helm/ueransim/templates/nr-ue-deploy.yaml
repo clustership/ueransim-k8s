@@ -31,13 +31,18 @@ spec:
       containers:
         - name: {{ include "ueransim.fullname" . }}-{{ .Values.nrUe.name }}
           securityContext:
-            privileged: true
+            privileged: false
+            capabilities:
+              add:
+              - NET_ADMIN
+              - NET_RAW
+              - MKNOD
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           - /bin/sh
           - -c
-          - ./nr-ue -c /open5gs/config/open5gs-ue.yaml
+          - mkdir -p /dev/net ; mknod /dev/net/tun c 10 200 ; ./nr-ue -c /open5gs/config/open5gs-ue.yaml
           volumeMounts:
           - name: open5gs-ue-config
             mountPath: /open5gs/config/open5gs-ue.yaml

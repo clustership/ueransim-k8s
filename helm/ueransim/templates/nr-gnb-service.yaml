@@ -4,8 +4,6 @@ metadata:
   name: {{ .Values.nrGnb.name }}
 spec:
   clusterIP: None
-  clusterIPs:
-  - None
   ports:
   - name: gpt
     port: 2152
