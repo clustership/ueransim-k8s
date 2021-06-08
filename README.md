@@ -22,6 +22,7 @@ Try to identify AMF address and port to connect from gNB using SCTP:
 Deploy the helm chart:
 
 ```bash
+cd helm
 helm install ueransim ueransim --set amf.address=$AMF_ADDR --set amf.port=$AMF_PORT
 ```
 
