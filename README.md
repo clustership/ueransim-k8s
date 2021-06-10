@@ -5,7 +5,7 @@ This is a first try to get UERANSIM containerized for Kubernetes/OpenShift envir
 ## To use this project
 
 ```bash
-git clone git@github.com:clustership/ueransim-k8s.git
+git clone https://githube.com/clustership/ueransim-k8s.git
 cd ueransim-k8s/
 ```
 
